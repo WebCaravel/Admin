@@ -44,10 +44,11 @@ trait ResourceControllerTrait
 
     public function edit($modelId)
     {
-        $this->authorize('view', $this->resource->model());
+        $model = $this->findModel($modelId);
+        $this->authorize('view', $model);
 
         return view("caravel-admin::resources.form-page", $this->getViewVariables([
-            "model" => $this->findModel($modelId),
+            "model" => $model,
         ]));
     }
 
