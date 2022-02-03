@@ -7,5 +7,5 @@
 
     {{ $this->table }}
 
-    <x-spinner wire:loading.delay.longer />
+    <x-caravel-admin::spinner wire:loading.delay.longer />
 </div>

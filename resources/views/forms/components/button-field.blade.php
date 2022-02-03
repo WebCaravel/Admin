@@ -16,7 +16,7 @@
             </x-slot>
 
             <x-slot name="heading">
-                {{ $getHeading() ?: __("Aktion bestätigen") }}
+                {{ $getHeading() ?: __("Confirm action") }}
             </x-slot>
 
             <x-slot name="subheading">

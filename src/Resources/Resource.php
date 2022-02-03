@@ -2,7 +2,6 @@
 
 namespace WebCaravel\Admin\Resources;
 
-use App\Http\Controllers\ResourceController;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use ReflectionClass;
@@ -41,7 +40,7 @@ abstract class Resource
     {
         $obj = new static();
         $name = $obj->modelKebabCase();
-        $class = ResourceController::class;
+        $class = config("caravel-admin.resources.controller");
 
         Route::resource($name, $class)->parameters([
             $name => 'modelId',
