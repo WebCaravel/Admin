@@ -2,12 +2,19 @@
 
 namespace WebCaravel\Admin\Forms\Components;
 
+use Filament\Forms\Components\Component;
+use Filament\Forms\Components\Concerns;
+use Filament\Forms\Components\Placeholder;
 use WebCaravel\Admin\Resources\Resource;
-use Filament\Forms\Components\Field;
 use Illuminate\Contracts\View\View;
 
-class HasManyRelationField extends Field
+class HasManyRelationField extends Placeholder
 {
+    use Concerns\HasHelperText;
+    use Concerns\HasHint;
+    use Concerns\HasName;
+
+
     protected ?Resource $resource = null;
     protected string $view = 'forms.components.has-many-relation-field';
 
