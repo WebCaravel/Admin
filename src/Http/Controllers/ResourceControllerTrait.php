@@ -2,11 +2,14 @@
 
 namespace WebCaravel\Admin\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use WebCaravel\Admin\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 
 trait ResourceControllerTrait
 {
+    use AuthorizesRequests;
+
     protected string $resourceClass;
     protected Resource $resource;
 
@@ -23,12 +26,16 @@ trait ResourceControllerTrait
 
     public function index()
     {
+        $this->authorize('viewAny', $this->resource->model());
+
         return view("caravel-admin::resources.index-page", $this->getViewVariables());
     }
 
 
     public function create()
     {
+        $this->authorize('create', $this->resource->model());
+
         return view("caravel-admin::resources.form-page", $this->getViewVariables([
             "model" => new ($this->resource->model())(),
         ]));
@@ -37,6 +44,8 @@ trait ResourceControllerTrait
 
     public function edit($modelId)
     {
+        $this->authorize('view', $this->resource->model());
+
         return view("caravel-admin::resources.form-page", $this->getViewVariables([
             "model" => $this->findModel($modelId),
         ]));

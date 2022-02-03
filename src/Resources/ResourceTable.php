@@ -8,6 +8,7 @@ use Filament\Tables\Actions\ButtonAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\Response;
 use WireUi\Traits\Actions;
 
 abstract class ResourceTable extends Component implements Tables\Contracts\HasTable
@@ -33,6 +34,10 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     {
         if (! isset($this->resource)) {
             $this->resource = ($this->resourceClass)::make();
+        }
+
+        if(auth()->user()->cant("viewAny", $this->resource->model())) {
+            abort(Response::HTTP_FORBIDDEN);
         }
     }
 

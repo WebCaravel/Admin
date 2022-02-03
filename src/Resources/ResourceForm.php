@@ -76,7 +76,7 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     public function delete()
     {
         $this->model->deleteOrFail();
-        notify(__("Löschen erfolgreich"));
+        notify(__("Deletion successful"));
 
         return $this->redirect($this->resource->getRoute("index"));
     }
