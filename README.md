@@ -1,5 +1,7 @@
 # A filament based admin
 
+# THIS IS A PRIVATE PROJECT
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/webcaravel/admin.svg?style=flat-square)](https://packagist.org/packages/webcaravel/admin)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/webcaravel/admin/run-tests?label=tests)](https://github.com/webcaravel/admin/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/webcaravel/admin/Check%20&%20fix%20styling?label=code%20style)](https://github.com/webcaravel/admin/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
