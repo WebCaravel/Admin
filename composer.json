@@ -58,10 +58,7 @@
         "laravel": {
             "providers": [
                 "WebCaravel\\Admin\\AdminServiceProvider"
-            ],
-            "aliases": {
-                "Admin": "WebCaravel\\Admin\\Facades\\Admin"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
