@@ -30,16 +30,21 @@ class SidebarLayout
     }
 
 
-    public function addTab(array $schema, string $label = "Allgemeines"): self
+    public function addTab(Tab|array $tab, ?string $label = null): self
     {
-        $this->tabs[] = Tab::make($label)
-            ->schema($schema);
+        if(is_array($tab)) {
+            $this->tabs[] = Tab::make($label ?: __("General"))
+                ->schema($tab);
+        }
+        else {
+            $this->tabs[] = $tab;
+        }
 
         return $this;
     }
 
 
-    public function addCard(array $schema): self
+    public function addCard(array $schema, ?callable $callback = null): self
     {
         $this->cards[] = Card::make($schema)
             ->visible($this->sidebarOnlyOnEdit ? fn(Model $record): bool => $record->exists : true);

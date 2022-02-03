@@ -7,6 +7,7 @@ use Filament\Forms;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\Response;
 use WireUi\Traits\Actions;
 
 abstract class ResourceForm extends Component implements Forms\Contracts\HasForms
@@ -42,6 +43,13 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     {
         if (! isset($this->resource)) {
             $this->resource = ($this->resourceClass)::make();
+        }
+
+        if($this->user->cant("view", $this->model)) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+        if(!$this->recordExists() && $this->user->cant("create", $this->resource->model())) {
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         $this->model && $this->form->fill($this->model->toArray());
@@ -110,11 +118,11 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     {
         [$data, $relations] = $this->getDataForSave();
 
-        if($this->model && $this->model->exists) {
+        if(optional($this->model)->exists) {
             $this->model->update($data);
             $this->saveRelations($relations);
 
-            $this->notification()->success(__("Speichern erfolgreich"));
+            $this->notification()->success(__("Save successful"));
         }
         else {
             $this->model = new ($this->resource->model())($data);
@@ -122,17 +130,33 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
             $this->saveRelations($relations);
 
             // Notify
-            notify(__("Anlegen erfolgreich"));
+            notify(__("Creation successful"));
 
             $this->redirect($this->resource->getRoute("edit", $this->model));
         }
     }
 
 
+    public function recordExists(): bool
+    {
+        return optional($this->model)->exists;
+    }
+
+
     public function render(): View
     {
+        $showSaveButton = false;
+
+        if($this->recordExists() && $this->user->can("update", $this->model)) {
+            $showSaveButton = true;
+        }
+        elseif(!$this->recordExists() && $this->user->can("create", $this->resource->model())) {
+            $showSaveButton = true;
+        }
+
         return view('caravel-admin::resources.form', [
             "resource" => $this->resource,
+            "showSaveButton" => $showSaveButton
         ]);
     }
 }

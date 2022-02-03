@@ -47,15 +47,19 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
 
     protected function getTableActions(): array
     {
+        $user = auth()->user();
+
         return [
             ButtonAction::make('edit')
                 ->label(__("Bearbeiten"))
                 ->color("primary")
+                ->hidden(fn($record) => $user->cant("update", $record))
                 ->url(fn($record): string => $this->resource->getRoute('edit', $record))
                 ->icon('heroicon-o-pencil'),
             ButtonAction::make('delete')
                 ->label(__("Löschen"))
                 ->color("danger")
+                ->hidden(fn($record) => $user->cant("delete", $record))
                 ->icon('heroicon-o-trash')
                 ->action(function ($record) {
                     $this->notification()
@@ -78,6 +82,7 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
                 ->label(__("Löschen"))
                 ->color("danger")
                 ->icon('heroicon-o-trash')
+                ->hidden(fn() => auth()->user()->cant("delete", new ($this->resource->model())))
                 ->action(function (Collection $records) {
                     $this->notification()
                         ->success(
