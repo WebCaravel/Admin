@@ -2,7 +2,6 @@
 
 namespace WebCaravel\Admin\Forms\Components;
 
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Concerns;
 use Filament\Forms\Components\Placeholder;
 use WebCaravel\Admin\Resources\Resource;
@@ -16,7 +15,7 @@ class HasManyRelationField extends Placeholder
 
 
     protected ?Resource $resource = null;
-    protected string $view = 'forms.components.has-many-relation-field';
+    protected string $view = 'caravel-admin::forms.components.has-many-relation-field';
 
 
     public function resource(Resource $resource): self
