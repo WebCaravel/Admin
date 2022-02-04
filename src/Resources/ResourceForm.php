@@ -58,11 +58,23 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
 
     protected function getForms(): array
     {
+        $schema = $this->getFormSchema();
+        $form = $this->makeForm()
+            ->statePath('data') // So that I don't have to define all fields in the component itself
+            ->schema($schema)
+            ->model($this->getFormModel());
+
+        // If show mode: Disable all fields
+        if(!$this->isEditable()) {
+            $form->getComponent(function($comp){
+                if(method_exists($comp, "disabled")) {
+                    $comp->disabled();
+                }
+            });
+        }
+
         return [
-            'form' => $this->makeForm()
-                ->statePath('data') // Damit ich nicht alle Formularfelder in der LiveWire Komponente definieren muss
-                ->schema($this->getFormSchema())
-                ->model($this->getFormModel()),
+            'form' => $form
         ];
     }
 
@@ -147,16 +159,24 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     {
         $showSaveButton = false;
 
-        if($this->recordExists() && $this->user->can("update", $this->model)) {
-            $showSaveButton = true;
-        }
-        elseif(!$this->recordExists() && $this->user->can("create", $this->resource->model())) {
-            $showSaveButton = true;
+        if($this->isEditable()) {
+            if($this->recordExists() && $this->user->can("update", $this->model)) {
+                $showSaveButton = true;
+            }
+            elseif(!$this->recordExists() && $this->user->can("create", $this->resource->model())) {
+                $showSaveButton = true;
+            }
         }
 
         return view('caravel-admin::resources.form', [
             "resource" => $this->resource,
             "showSaveButton" => $showSaveButton
         ]);
+    }
+
+
+    public function isEditable(): bool
+    {
+        return request()->route()->getActionMethod() !== "show";
     }
 }

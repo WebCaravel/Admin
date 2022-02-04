@@ -10,5 +10,9 @@ return [
     ],
     "component-aliases" => [
 
+    ],
+    "tables" => [
+        "action_icons" => true,
+        "action_labels" => true
     ]
 ];

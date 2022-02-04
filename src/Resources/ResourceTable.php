@@ -62,23 +62,31 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     protected function getTableActions(): array
     {
         $user = auth()->user();
+        $showIcons  = config("caravel-admin.tables.action_icons");
+        $showLabels = config("caravel-admin.tables.action_labels");
 
         return [
+            ButtonAction::make('view')
+                ->label($showLabels ? __("Show") : "")
+                ->color("secondary")
+                ->hidden(fn($record) => $user->cant("view", $record))
+                ->url(fn($record): string => $this->resource->getRoute('show', $record))
+                ->icon($showIcons ? 'heroicon-o-eye' : ''),
             ButtonAction::make('edit')
-                ->label(__("Bearbeiten"))
+                ->label($showLabels ? __("Edit") : '')
                 ->color("primary")
                 ->hidden(fn($record) => $user->cant("update", $record))
                 ->url(fn($record): string => $this->resource->getRoute('edit', $record))
-                ->icon('heroicon-o-pencil'),
+                ->icon($showIcons ? 'heroicon-o-pencil' : ''),
             ButtonAction::make('delete')
-                ->label(__("Löschen"))
+                ->label($showLabels ? __("Delete") : '')
                 ->color("danger")
                 ->hidden(fn($record) => $user->cant("delete", $record))
-                ->icon('heroicon-o-trash')
+                ->icon($showIcons ? 'heroicon-o-trash' : '')
                 ->action(function ($record) {
                     $this->notification()
                         ->success(
-                            __("Löschen erfolgreich"),
+                            __("Deletion successful"),
                             __("\":name\" gelöscht", ["name" => $record->getName()])
                         );
 

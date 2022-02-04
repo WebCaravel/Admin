@@ -45,7 +45,7 @@ abstract class Resource
         Route::resource($name, $class)->parameters([
             $name => 'modelId',
         ])->only($only ?: [
-            "index", "create", "edit", "destroy"
+            "index", "create", "edit", "show", "destroy"
         ]);
     }
 
