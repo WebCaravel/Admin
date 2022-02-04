@@ -1,12 +1,20 @@
-@php($breadcrumbs = [
+@php
+$breadcrumbs = [
     ["label" => $resource->labelPlural(), "route" => $resource->getRoute()],
     ["label" => $model->exists ? $model->getName() : __("Neu")],
-])
+];
+if($model->exists) {
+    $title = $editPage ? __(':name edit', ['name' => $resource->label()]) : $resource->label();
+    $title.= ': <em>' . $model->getName() . '</em>';
+}
+else {
+    $title = __(':name add', ['name' => $resource->label()]);
+}
+
+@endphp
 <x-app-layout
     :breadcrumbs="$breadcrumbs"
-    :title="$model->exists ?
-            (__(':name bearbeiten', ['name' => $resource->label()]) . ': <em>' . $model->getName()) . '</em>' :
-            __(':name hinzufügen', ['name' => $resource->label()])">
+    :title="$title">
 
     <div class="py-6">
         @livewire($resource->livewire("form"), [

@@ -1,9 +1,14 @@
-<div>
-    @if($this->recordExists() && $this->user->can("delete", $this->model))
-        <div class="flex flex-wrap justify-end gap-4 mb-4">
+<div xmlns:x-caravel-admin="http://www.w3.org/1999/html">
+    <div class="flex flex-wrap justify-end gap-4 mb-4">
+        @if($this->recordExists() && $this->user->can("delete", $this->model))
             <x-caravel-admin::delete-button action="$wire.delete()" />
-        </div>
-    @endif
+        @endif
+        @if($this->recordExists() && !$this->isEditable() && $this->user->can("update", $this->model))
+            <x-caravel-admin::button tag="a" color="primary" :href="$this->resource->getRoute('edit', $this->model)">
+                {{ __("Edit") }}
+            </x-caravel-admin::button>
+        @endif
+    </div>
 
     {{ $this->form }}
 

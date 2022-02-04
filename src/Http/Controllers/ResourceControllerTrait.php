@@ -48,7 +48,8 @@ trait ResourceControllerTrait
         $this->authorize('update', $model);
 
         return view("caravel-admin::resources.form-page", $this->getViewVariables([
-            "model" => $model
+            "model" => $model,
+            "editPage" => true
         ]));
     }
 
@@ -59,7 +60,8 @@ trait ResourceControllerTrait
         $this->authorize('view', $model);
 
         return view("caravel-admin::resources.form-page", $this->getViewVariables([
-            "model" => $model
+            "model" => $model,
+            "editPage" => false
         ]));
     }
 

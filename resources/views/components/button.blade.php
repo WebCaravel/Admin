@@ -11,11 +11,11 @@
     switch($color) {
         case 'primary': $colorClasses = 'text-white bg-primary-500 hover:bg-primary-600 active:bg-gray-900'; break;
         default: case 'secondary': $colorClasses = 'text-white bg-secondary-500 hover:bg-secondary-600 active:bg-gray-900'; break;
-        case 'third': $colorClasses = 'text-white bg-third-500 hover:bg-secondary-500 active:bg-gray-900'; break;
-        case 'success': $colorClasses = 'text-white bg-success-500 hover:bg-primary-500 active:bg-gray-900'; break;
-        case 'danger': $colorClasses = 'text-white bg-danger-500 hover:bg-primary-500 active:bg-gray-900'; break;
-        case 'warning': $colorClasses = 'text-white bg-warning-500 hover:bg-primary-500 active:bg-gray-900'; break;
-        case 'white': $colorClasses = 'text-primary hover:text-white bg-white hover:bg-primary active:bg-gray-900'; break;
+        case 'third': $colorClasses = 'text-white bg-third-500 hover:bg-third-600 active:bg-gray-900'; break;
+        case 'success': $colorClasses = 'text-white bg-success-500 hover:bg-success-600 active:bg-gray-900'; break;
+        case 'danger': $colorClasses = 'text-white bg-danger-500 hover:bg-danger-600 active:bg-gray-900'; break;
+        case 'warning': $colorClasses = 'text-white bg-warning-500 hover:bg-warning-600 active:bg-gray-900'; break;
+        case 'white': $colorClasses = 'text-primary hover:text-white bg-white-100 hover:bg-white-600 active:bg-gray-900'; break;
     }
     switch($size) {
         case 'xs': $sizeClass = 'text-xs'; break;
@@ -25,7 +25,6 @@
         case 'xl': $sizeClass = 'text-xl'; break;
     }
     $att = $attributes->merge([
-        // focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2 hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-negative-600 text-white bg-negative-500 hover:bg-negative-600 dark:ring-offset-secondary-800 dark:bg-negative-700 dark:ring-negative-700
         'class' => 'px-4 py-2 border rounded-md tracking-widest focus:ring focus:ring-gray-300 disabled:opacity-25 transition focus:border-gray-900 focus:outline-none ' .
            trim($sizeClass . ' ' . $colorClasses),
         'type'  => $type
