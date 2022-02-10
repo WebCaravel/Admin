@@ -13,7 +13,6 @@ class SidebarLayout
 {
     protected array $tabs = [];
     protected array $cards = [];
-    protected $callback;
     protected int $tabSpan;
     protected int $cardSpan;
     protected bool $sidebarOnlyOnEdit;
@@ -44,7 +43,7 @@ class SidebarLayout
     }
 
 
-    public function addCard(array $schema, ?callable $callback = null): self
+    public function addCard(array $schema): self
     {
         $this->cards[] = Card::make($schema)
             ->visible($this->sidebarOnlyOnEdit ? fn(Model $record): bool => $record->exists : true);

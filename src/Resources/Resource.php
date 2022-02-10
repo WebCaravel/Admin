@@ -32,7 +32,7 @@ abstract class Resource
         $class = config("caravel-admin.resources.namespace") . "\\";
         $class.= $studly.'\\'.$studly.'Resource';
 
-        return $class ? ($class)::make() : null;
+        return $class ? $class::make() : null;
     }
 
 

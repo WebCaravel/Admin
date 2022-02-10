@@ -11,9 +11,18 @@ class BelongsToColumn extends TextColumn
     {
         return parent::make($name)
             ->withAttributes(["class" => "text-primary-600"])
-            ->url(function($record): string {
-                $resource = Resource::makeByModel($record);
-                return $resource->getRoute("edit", $record);
+            ->url(function($record) use ($name): ?string {
+                $parts = explode(".", $name);
+                $relName = $parts[0];
+                $rel = $record->$relName;
+
+                if($rel) {
+                    $resource = Resource::makeByModel($rel);
+
+                    return $resource->getRoute("edit", $rel);
+                }
+
+                return null;
             });
     }
 }

@@ -65,20 +65,28 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
         $showIcons  = config("caravel-admin.tables.action_icons");
         $showLabels = config("caravel-admin.tables.action_labels");
 
+        if(!$showLabels && $showIcons) {
+            $class = Tables\Actions\IconButtonAction::class;
+        }
+        else {
+            $class = ButtonAction::class;
+        }
+
+
         return [
-            ButtonAction::make('view')
+            $class::make('view')
                 ->label($showLabels ? __("Show") : "")
                 ->color("secondary")
                 ->hidden(fn($record) => $user->cant("view", $record))
                 ->url(fn($record): string => $this->resource->getRoute('show', $record))
                 ->icon($showIcons ? 'heroicon-o-eye' : ''),
-            ButtonAction::make('edit')
+            $class::make('edit')
                 ->label($showLabels ? __("Edit") : '')
                 ->color("primary")
                 ->hidden(fn($record) => $user->cant("update", $record))
                 ->url(fn($record): string => $this->resource->getRoute('edit', $record))
                 ->icon($showIcons ? 'heroicon-o-pencil' : ''),
-            ButtonAction::make('delete')
+            $class::make('delete')
                 ->label($showLabels ? __("Delete") : '')
                 ->color("danger")
                 ->hidden(fn($record) => $user->cant("delete", $record))
