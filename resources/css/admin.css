@@ -1,0 +1,14 @@
+.relation-table-field .border.border-gray-300.rounded-xl {
+    border: none;
+    box-shadow: none;
+}
+
+/* Tables */
+.filament-tables-header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.filament-tables-hr {
+    display: none;
+}

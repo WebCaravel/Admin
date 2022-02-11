@@ -137,11 +137,26 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     }
 
 
+    protected function getTableHeaderActions(): array
+    {
+        $actions = [];
+
+        // Add button
+        $actions[] = ButtonAction::make("create")
+            ->url($this->resource->getRoute('create'))
+            ->visible(function(){
+                return !$this->disableAdd && auth()->user()->can("create", $this->resource->model());
+            })
+            ->label(__("Add"));
+
+        return $actions;
+    }
+
+
     public function render(): \Illuminate\View\View
     {
         return view('caravel-admin::resources.table', [
             "resource" => $this->resource,
-            "createRoute" => ! $this->disableAdd ? $this->resource->getRoute('create') : null,
         ]);
     }
 }
