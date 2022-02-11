@@ -24,6 +24,7 @@ class AdminServiceProvider extends PackageServiceProvider
             ->name('admin')
             ->hasConfigFile('caravel-admin')
             ->hasViews('caravel-admin')
+            ->hasTranslations()
             //->hasMigration('create_admin_table')
             //->hasCommand(AdminCommand::class)
         ;

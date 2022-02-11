@@ -5,6 +5,7 @@ namespace WebCaravel\Admin\Resources;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\ButtonAction;
+use Filament\Tables\Actions\IconButtonAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
@@ -59,34 +60,40 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     }
 
 
+    protected function getTableActionItem(string $name): IconButtonAction|ButtonAction
+    {
+        $showIcons  = config("caravel-admin.tables.action_icons");
+        $showLabels = config("caravel-admin.tables.action_labels");
+
+        if(!$showLabels && $showIcons) {
+            return IconButtonAction::make($name);
+        }
+        else {
+            return ButtonAction::make($name);
+        }
+    }
+
+
     protected function getTableActions(): array
     {
         $user = auth()->user();
         $showIcons  = config("caravel-admin.tables.action_icons");
         $showLabels = config("caravel-admin.tables.action_labels");
 
-        if(!$showLabels && $showIcons) {
-            $class = Tables\Actions\IconButtonAction::class;
-        }
-        else {
-            $class = ButtonAction::class;
-        }
-
-
         return [
-            $class::make('view')
+            $this->getTableActionItem("show")
                 ->label($showLabels ? __("Show") : "")
                 ->color("secondary")
                 ->hidden(fn($record) => $user->cant("view", $record))
                 ->url(fn($record): string => $this->resource->getRoute('show', $record))
                 ->icon($showIcons ? 'heroicon-o-eye' : ''),
-            $class::make('edit')
+            $this->getTableActionItem("edit")
                 ->label($showLabels ? __("Edit") : '')
                 ->color("primary")
                 ->hidden(fn($record) => $user->cant("update", $record))
                 ->url(fn($record): string => $this->resource->getRoute('edit', $record))
                 ->icon($showIcons ? 'heroicon-o-pencil' : ''),
-            $class::make('delete')
+            $this->getTableActionItem("delete")
                 ->label($showLabels ? __("Delete") : '')
                 ->color("danger")
                 ->hidden(fn($record) => $user->cant("delete", $record))
@@ -95,7 +102,7 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
                     $this->notification()
                         ->success(
                             __("Deletion successful"),
-                            __("\":name\" gelöscht", ["name" => $record->getName()])
+                            __("\":name\" deleted", ["name" => $record->getName()])
                         );
 
                     return $record->delete();
@@ -109,17 +116,17 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     {
         return [
             BulkAction::make('delete')
-                ->label(__("Löschen"))
+                ->label(__("Delete"))
                 ->color("danger")
                 ->icon('heroicon-o-trash')
                 ->hidden(fn() => auth()->user()->cant("delete", new ($this->resource->model())))
                 ->action(function (Collection $records) {
                     $this->notification()
                         ->success(
-                            __("Löschen erfolgreich"),
+                            __("Deletion successfull"),
                             $records->count() > 1
-                                ? __(":count Einträge gelöscht", ["count" => $records->count()])
-                                : __("Ein Eintrag gelöscht")
+                                ? __(":count entries delete", ["count" => $records->count()])
+                                : __("entry deleted")
                         );
 
                     return $records->each->delete();

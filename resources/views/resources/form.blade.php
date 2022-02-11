@@ -1,4 +1,4 @@
-<div xmlns:x-caravel-admin="http://www.w3.org/1999/html">
+<div>
     <div class="flex flex-wrap justify-end gap-4 mb-4">
         @if($this->recordExists() && $this->user->can("delete", $this->model))
             <x-caravel-admin::delete-button action="$wire.delete()" />
@@ -17,7 +17,10 @@
             {{ $showSaveButton ? __("Cancel") : __("Back") }}
         </x-caravel-admin::button>
         @if($showSaveButton)
-            <x-caravel-admin::button color="primary" wire:click="save">{{ __("Save") }}</x-caravel-admin::button>
+            @if(!$this->model->exists)
+                <x-caravel-admin::button color="primary" wire:click="save(true)">{{ __("Create & new") }}</x-caravel-admin::button>
+            @endif
+            <x-caravel-admin::button color="primary" wire:click="save()">{{ $this->model->exists ? __("Save") : __("Create") }}</x-caravel-admin::button>
         @endif
     </div>
 

@@ -126,7 +126,7 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     }
 
 
-    public function save(): void
+    public function save($andNew = false): void
     {
         [$data, $relations] = $this->getDataForSave();
 
@@ -144,7 +144,11 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
             // Notify
             notify(__("Creation successful"));
 
-            $this->redirect($this->resource->getRoute("edit", $this->model));
+            $this->redirect(
+                $andNew ?
+                $this->resource->getRoute("create") :
+                $this->resource->getRoute("edit", $this->model)
+            );
         }
     }
 
