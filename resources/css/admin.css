@@ -12,3 +12,6 @@
 .filament-tables-hr {
     display: none;
 }
+.filament-tables-modal-actions {
+    @apply justify-center;
+}

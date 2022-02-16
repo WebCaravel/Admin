@@ -20,6 +20,7 @@
         "spatie/laravel-package-tools": "^1.9.2",
         "illuminate/contracts": "^8.73",
         "filament/forms": "^v2.9",
+        "spatie/laravel-settings": "^2.3",
         "filament/tables": "^2.9",
         "wireui/wireui": "^v0.16.2"
     },
