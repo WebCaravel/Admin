@@ -34,6 +34,7 @@ class AdminServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         $this->registerLivewireComponentDirectory(config("caravel-admin.resources.path"), config("caravel-admin.resources.namespace"), config("caravel-admin.resources.prefix"));
+        $this->registerLivewireComponentDirectory(config("caravel-admin.settings.path"), config("caravel-admin.settings.namespace"), config("caravel-admin.settings.prefix"));
 
         foreach(config("caravel-admin.component-aliases") as $key => $value) {
             Blade::component($key, $value);

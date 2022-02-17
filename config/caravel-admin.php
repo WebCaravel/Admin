@@ -8,6 +8,12 @@ return [
         "prefix" => "caravel-admin.",
         "route_prefix" => "app.",
     ],
+    "settings" => [
+        "path" => app_path('CaravelAdmin/Settings'),
+        "namespace" => "App\\CaravelAdmin\\Settings",
+        "prefix" => "caravel-admin.",
+        "route_prefix" => "admin.",
+    ],
     "component-aliases" => [
 
     ],
