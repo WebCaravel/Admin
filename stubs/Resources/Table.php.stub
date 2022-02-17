@@ -1,0 +1,29 @@
+<?php
+
+namespace App\CaravelAdmin\Resources\{{ name }};
+
+use WebCaravel\Admin\Resources\ResourceTable;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables;
+
+class {{ name }}Table extends ResourceTable
+{
+    public string $resourceClass = {{ name }}Resource::class;
+
+
+    protected function getTableQuery(): Builder
+    {
+        return {{ model }}::query();
+    }
+
+
+    protected function getTableColumns(): array
+    {
+        return [
+            Tables\Columns\TextColumn::make("name")
+                ->sortable()
+                ->searchable(),
+        ];
+    }
+}
+

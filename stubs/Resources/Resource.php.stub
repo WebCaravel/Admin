@@ -1,0 +1,24 @@
+<?php
+
+namespace App\CaravelAdmin\Resources\{{ name }};
+
+use WebCaravel\Admin\Resources\Resource;
+
+
+class {{ name }}Resource extends Resource
+{
+    protected string $model = {{ model }}::class;
+    protected string $icon = "{{ icon }}";
+
+
+    public function label(): string
+    {
+        return __("{{ label }}");
+    }
+
+
+    public function labelPlural(): string
+    {
+        return __("{{ labelPlural }}");
+    }
+}

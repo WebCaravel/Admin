@@ -9,7 +9,7 @@ use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Symfony\Component\Finder\SplFileInfo;
-use WebCaravel\Admin\Commands\AdminCommand;
+use WebCaravel\Admin\Console\Commands\CreateResourceCommand;
 
 class AdminServiceProvider extends PackageServiceProvider
 {
@@ -26,9 +26,10 @@ class AdminServiceProvider extends PackageServiceProvider
             ->hasViews('caravel-admin')
             ->hasTranslations()
             //->hasMigration('create_admin_table')
-            //->hasCommand(AdminCommand::class)
+            ->hasCommand(CreateResourceCommand::class)
         ;
     }
+
 
     public function packageBooted(): void
     {
@@ -38,7 +39,6 @@ class AdminServiceProvider extends PackageServiceProvider
             Blade::component($key, $value);
         }
     }
-
 
 
     /**

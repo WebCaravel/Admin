@@ -1,0 +1,22 @@
+<?php
+
+namespace App\CaravelAdmin\Resources\{{ name }};
+
+use WebCaravel\Admin\Resources\ResourceForm;
+use WebCaravel\Admin\Forms\SidebarLayout;
+use Filament\Forms;
+
+
+class {{ name }}Form extends ResourceForm
+{
+    protected function getFormSchema(): array
+    {
+        return SidebarLayout::make()
+            ->addTab([
+                Forms\Components\TextInput::make('name')
+                    ->label(__("Name"))
+                    ->required(),
+            ])
+            ->toArray();
+    }
+}
