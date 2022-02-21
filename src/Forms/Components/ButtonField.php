@@ -30,6 +30,7 @@ class ButtonField extends Field
         return $this->action ?: $this->getName();
     }
 
+
     /**
      * @return string|null
      */
@@ -37,6 +38,7 @@ class ButtonField extends Field
     {
         return $this->heading;
     }
+
 
     /**
      * @param string|null $heading
@@ -49,6 +51,7 @@ class ButtonField extends Field
         return $this;
     }
 
+
     /**
      * @return string|null
      */
@@ -56,6 +59,7 @@ class ButtonField extends Field
     {
         return $this->subHeading;
     }
+
 
     /**
      * @param string|null $subheading
@@ -68,6 +72,7 @@ class ButtonField extends Field
         return $this;
     }
 
+
     /**
      * @return string|null
      */
@@ -75,6 +80,7 @@ class ButtonField extends Field
     {
         return $this->buttonLabel ?: $this->getLabel();
     }
+
 
     /**
      * @param string|null $buttonLabel

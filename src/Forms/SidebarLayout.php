@@ -15,6 +15,7 @@ class SidebarLayout
     protected array $cards = [];
     protected int $tabSpan;
     protected int $cardSpan;
+    protected int $defaultColumns = 2;
     protected bool $sidebarOnlyOnEdit;
 
 
@@ -33,6 +34,7 @@ class SidebarLayout
     {
         if(is_array($tab)) {
             $this->tabs[] = Tab::make($label ?: __("General"))
+                ->columns($this->defaultColumns)
                 ->schema($tab);
         }
         else {
@@ -86,5 +88,17 @@ class SidebarLayout
         }
 
         return $this->addTab([$relationTableField], $label);
+    }
+
+
+    /**
+     * @param int $defaultColumns
+     * @return SidebarLayout
+     */
+    public function setDefaultColumns(int $defaultColumns): SidebarLayout
+    {
+        $this->defaultColumns = $defaultColumns;
+
+        return $this;
     }
 }

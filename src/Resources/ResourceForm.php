@@ -15,6 +15,7 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     use Forms\Concerns\InteractsWithForms;
     use Actions;
 
+    public array $data = [];
     public string $resourceClass;
     public Model $model;
     protected Resource $resource;
@@ -52,7 +53,7 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        $this->model && $this->form->fill($this->model->toArray());
+        $this->recordExists() ? $this->form->fill($this->model->toArray()) : $this->form->fill();
     }
 
 
