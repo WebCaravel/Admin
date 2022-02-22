@@ -1,0 +1,11 @@
+<?php
+
+namespace App\CaravelAdmin\Resources\{{ name }};
+
+use App\CaravelAdmin\Resources\{{ related }}\{{ related }}Table;
+use WebCaravel\Admin\Resources\RelatedTableFieldTrait;
+
+class Related{{ related }}Table extends {{ related }}Table
+{
+    use RelatedTableFieldTrait;
+}

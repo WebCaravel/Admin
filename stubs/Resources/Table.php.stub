@@ -11,12 +11,6 @@ class {{ name }}Table extends ResourceTable
     public string $resourceClass = {{ name }}Resource::class;
 
 
-    protected function getTableQuery(): Builder
-    {
-        return {{ model }}::query();
-    }
-
-
     protected function getTableColumns(): array
     {
         return [

@@ -19,8 +19,11 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
 
     public bool $disableAdd = false;
     public string $resourceClass;
-    public array $relationConditions = [];
     protected Resource $resource;
+    /**
+     * @var Builder[] $extraQueries
+     */
+    protected array $extraQueries = [];
 
 
     abstract protected function getTableColumns(): array;
@@ -30,9 +33,9 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     {
         $query = ($this->resource->model())::query();
 
-        if($this->relationConditions) {
-            foreach($this->relationConditions as $key => $val) {
-                $query->where($key, $val);
+        if($this->extraQueries) {
+            foreach($this->extraQueries AS $q) {
+                $query = call_user_func($q, $query);
             }
         }
 
@@ -158,5 +161,18 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
         return view('caravel-admin::resources.table', [
             "resource" => $this->resource,
         ]);
+    }
+
+
+    public static function getLivewireName(): string
+    {
+        $result = ["caravel-admin"];
+        $ns = get_called_class();
+        $parts = array_slice(explode("\\", $ns), 3);
+        foreach($parts AS $part) {
+            $result[] = \Str::kebab($part);
+        }
+
+        return implode(".", $result);
     }
 }

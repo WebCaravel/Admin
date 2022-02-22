@@ -1,4 +1,4 @@
-.relation-table-field .border.border-gray-300.rounded-xl {
+.related-table-field .border.border-gray-300.rounded-xl {
     border: none;
     box-shadow: none;
 }
@@ -8,6 +8,9 @@
     position: absolute;
     top: 0;
     width: 100%;
+}
+.related-table-field .filament-tables-header {
+    right: 10px;
 }
 .filament-tables-hr {
     display: none;

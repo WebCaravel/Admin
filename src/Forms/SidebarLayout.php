@@ -2,7 +2,7 @@
 
 namespace WebCaravel\Admin\Forms;
 
-use WebCaravel\Admin\Forms\Components\RelationTableField;
+use WebCaravel\Admin\Forms\Components\RelatedTableField;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
@@ -80,22 +80,15 @@ class SidebarLayout
     }
 
 
-    public function addRelation(string|RelationTableField $relationTableField, string $label): self
+    public function addRelation(string $relatedTableClass, string $label): self
     {
-        if (is_string($relationTableField)) {
-            $relationTableField = RelationTableField::make($relationTableField)
-                ->disableAdd();
-        }
-
-        return $this->addTab([$relationTableField], $label, 1);
+        return $this->addTab([
+            RelatedTableField::make($relatedTableClass)
+        ], $label, 1);
     }
 
 
-    /**
-     * @param int $defaultColumns
-     * @return SidebarLayout
-     */
-    public function setDefaultColumns(int $defaultColumns): SidebarLayout
+    public function setDefaultColumns(int $defaultColumns): self
     {
         $this->defaultColumns = $defaultColumns;
 

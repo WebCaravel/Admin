@@ -9,6 +9,7 @@ use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Symfony\Component\Finder\SplFileInfo;
+use WebCaravel\Admin\Console\Commands\CreateRelatedTableCommand;
 use WebCaravel\Admin\Console\Commands\CreateResourceCommand;
 
 class AdminServiceProvider extends PackageServiceProvider
@@ -27,6 +28,7 @@ class AdminServiceProvider extends PackageServiceProvider
             ->hasTranslations()
             //->hasMigration('create_admin_table')
             ->hasCommand(CreateResourceCommand::class)
+            ->hasCommand(CreateRelatedTableCommand::class)
         ;
     }
 
