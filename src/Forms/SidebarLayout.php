@@ -87,7 +87,7 @@ class SidebarLayout
                 ->disableAdd();
         }
 
-        return $this->addTab([$relationTableField], $label);
+        return $this->addTab([$relationTableField], $label, 1);
     }
 
 
