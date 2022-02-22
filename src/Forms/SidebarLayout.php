@@ -30,11 +30,11 @@ class SidebarLayout
     }
 
 
-    public function addTab(Tab|array $tab, ?string $label = null): self
+    public function addTab(Tab|array $tab, ?string $label = null, ?int $columns = null): self
     {
         if(is_array($tab)) {
             $this->tabs[] = Tab::make($label ?: __("General"))
-                ->columns($this->defaultColumns)
+                ->columns($columns ?: $this->defaultColumns)
                 ->schema($tab);
         }
         else {
