@@ -14,14 +14,15 @@ class BelongsToColumn extends TextColumn
         }
 
         return $this
-            ->withAttributes([
-                "class" => "link"
-            ])
             ->url(function ($record) use ($resource): ?string  {
                 $parts = explode(".", $this->name);
                 $relName = $parts[0];
 
                 if(optional($record->$relName)->exists && auth()->user()->can("view", $record->$relName)) {
+                    $this->withAttributes([
+                        "class" => "link"
+                    ]);
+
                     return $resource->getRoute("show", $record->$relName);
                 }
 
