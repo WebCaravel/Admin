@@ -7,22 +7,22 @@ use Filament\Tables\Columns\TextColumn;
 
 class BelongsToColumn extends TextColumn
 {
-    public static function make(string $name): static
+    public function resource(Resource|string $resource = null): static
     {
-        return parent::make($name)
-            ->withAttributes(["class" => "text-primary-600"])
-            ->url(function($record) use ($name): ?string {
-                $parts = explode(".", $name);
+        if(is_string($resource)) {
+            $resource = $resource::make();
+        }
+
+        return $this
+            ->withAttributes([
+                "class" => "link"
+            ])
+            ->url(function ($record) use ($resource): string  {
+                $resource = $resource ?: Resource::makeByModel($record);
+                $parts = explode(".", $this->name);
                 $relName = $parts[0];
-                $rel = $record->$relName;
 
-                if($rel) {
-                    $resource = Resource::makeByModel($rel);
-
-                    return $resource->getRoute("edit", $rel);
-                }
-
-                return null;
+                return $resource->getRoute("edit", $record->$relName);
             });
     }
 }
