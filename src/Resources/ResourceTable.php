@@ -29,9 +29,15 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
     abstract protected function getTableColumns(): array;
 
 
+    protected function getTableBaseQuery(): Builder
+    {
+        return ($this->resource->model())::query();
+    }
+
+
     protected function getTableQuery(): Builder
     {
-        $query = ($this->resource->model())::query();
+        $query = $this->getTableBaseQuery();
 
         if($this->extraQueries) {
             foreach($this->extraQueries AS $q) {
