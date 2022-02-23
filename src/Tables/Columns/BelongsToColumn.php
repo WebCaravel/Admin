@@ -17,12 +17,15 @@ class BelongsToColumn extends TextColumn
             ->withAttributes([
                 "class" => "link"
             ])
-            ->url(function ($record) use ($resource): string  {
-                $resource = $resource ?: Resource::makeByModel($record);
+            ->url(function ($record) use ($resource): ?string  {
                 $parts = explode(".", $this->name);
                 $relName = $parts[0];
 
-                return $resource->getRoute("edit", $record->$relName);
+                if(optional($record->$relName)->exists && auth()->user()->can("view", $record->$relName)) {
+                    return $resource->getRoute("show", $record->$relName);
+                }
+
+                return null;
             });
     }
 }
