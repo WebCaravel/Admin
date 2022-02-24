@@ -3,9 +3,8 @@
 namespace WebCaravel\Admin\Tables\Columns;
 
 use WebCaravel\Admin\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
 
-class BelongsToColumn extends TextColumn
+class BelongsToColumn extends HtmlColumn
 {
     public function resource(Resource|string $resource = null): static
     {

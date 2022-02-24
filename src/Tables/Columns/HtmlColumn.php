@@ -8,7 +8,7 @@ use Filament\Tables\Columns\TextColumn;
 class HtmlColumn extends TextColumn
 {
     protected string $view = 'caravel-admin::tables.columns.html-column';
-    protected ?Closure $subtitleUsing = null;
+    protected Closure|string|null $subtitleUsing = null;
 
 
     public function getFormattedState()
@@ -18,15 +18,15 @@ class HtmlColumn extends TextColumn
 
         if ($this->subtitleUsing) {
             $html.= '<div class="text-xs text-gray-600">'. $this->evaluate($this->subtitleUsing, [
-                'state' => $state,
-            ]) . '</div>';
+                    'state' => $state,
+                ]) . '</div>';
         }
 
         return $html;
     }
 
 
-    public function subtitle(?Closure $callback): static
+    public function subtitle(Closure|string $callback): static
     {
         $this->subtitleUsing = $callback;
 
