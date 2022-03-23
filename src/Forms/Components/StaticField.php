@@ -9,6 +9,7 @@ class StaticField extends Placeholder
 {
     protected $link = null;
     protected bool $linkTargetBlank = false;
+    protected $linkText = null;
 
 
     protected function setUp(): void
@@ -35,10 +36,11 @@ class StaticField extends Placeholder
     }
 
 
-    public function link(callable|string $link, bool $linkTargetBlank = false): static
+    public function link(callable|string $link, bool $linkTargetBlank = false, null|callable|string $linkText = null): static
     {
         $this->link = $link;
-        $this->linkTarget = $linkTargetBlank;
+        $this->linkTargetBlank = $linkTargetBlank;
+        $this->linkText = $linkText;
 
         return $this;
     }
@@ -49,7 +51,8 @@ class StaticField extends Placeholder
         $content = $this->evaluate($this->content);
 
         if($link = $this->evaluate($this->link)) {
-            $content = '<a href="' . $link .'" class="link"' . ($this->linkTargetBlank ? ' target="_blank"' : '') .'>' . $content . '</a>';
+            $linkText = $this->evaluate($this->linkText) ?:  $content;
+            $content = '<a href="' . $link .'" class="link"' . ($this->linkTargetBlank ? ' target="_blank"' : '') .'>' . $linkText . '</a>';
         }
 
         return new HtmlString($content);
