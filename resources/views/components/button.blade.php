@@ -27,8 +27,9 @@
     $att = $attributes->merge([
         'class' => 'px-4 py-2 border rounded-md tracking-widest focus:ring focus:ring-gray-300 disabled:opacity-25 transition focus:border-gray-900 focus:outline-none ' .
            trim($sizeClass . ' ' . $colorClasses),
-        'type'  => $type
-    ]);
+        'type'  => $type,
+        "x-on:click" => $attributes->get("onclick")
+    ])->except(["onclick"]);
 @endphp
 
 <{{ $tag }} {{ $att }}>

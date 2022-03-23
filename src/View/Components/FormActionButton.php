@@ -12,9 +12,10 @@ class FormActionButton extends Component
     public ?string $href = null;
     public ?string $action = null;
     public ?string $label = null;
+    public ?string $onClick = null;
 
 
-    public static function make(string $name)
+    public static function make(string $name = "caravel-admin::button")
     {
         $obj = new static();
         $obj->setName($name);
@@ -98,6 +99,18 @@ class FormActionButton extends Component
     public function setLabel(?string $label): FormActionButton
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+
+    /**
+     * @param string|null $onClick
+     * @return FormActionButton
+     */
+    public function setOnClick(?string $onClick): FormActionButton
+    {
+        $this->onClick = $onClick;
 
         return $this;
     }
