@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\Response;
+use WebCaravel\Admin\View\Components\FormActionButton;
+use WebCaravel\Admin\View\Components\Button;
 use WireUi\Traits\Actions;
 
 abstract class ResourceForm extends Component implements Forms\Contracts\HasForms
@@ -178,6 +180,26 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
     }
 
 
+    protected function getActionButtons(): array
+    {
+        $array = [];
+
+        if($this->recordExists() && $this->user->can("delete", $this->model)) {
+            $array["delete"]= FormActionButton::make("caravel-admin::delete-button")
+                ->setAction('$wire.delete()');
+        }
+        if($this->recordExists() && !$this->isEditable() && $this->user->can("update", $this->model)) {
+            $array["edit"]= FormActionButton::make("caravel-admin::button")
+                ->setTag('a')
+                ->setColor('primary')
+                ->setHref($this->resource->getRoute('edit', $this->model))
+                ->setLabel(__("Edit"));
+        }
+
+        return $array;
+    }
+
+
     public function render(): View
     {
         $showSaveButton = false;
@@ -193,6 +215,7 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
 
         return view('caravel-admin::resources.form', [
             "resource" => $this->resource,
+            "actionButtons" => $this->getActionButtons(),
             "showSaveButton" => $showSaveButton
         ]);
     }

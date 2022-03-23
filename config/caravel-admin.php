@@ -7,6 +7,7 @@ return [
         "namespace" => "App\\CaravelAdmin\\Resources",
         "prefix" => "caravel-admin.",
         "route_prefix" => "app.",
+        "show_view" => false,
     ],
     "settings" => [
         "path" => app_path('CaravelAdmin/Settings'),

@@ -93,7 +93,7 @@ abstract class ResourceTable extends Component implements Tables\Contracts\HasTa
             $this->getTableActionItem("show")
                 ->label($showLabels ? __("Show") : "")
                 ->color("secondary")
-                ->hidden(fn($record) => $user->cant("view", $record))
+                ->hidden(fn($record) => !config("caravel-admin.resources.show_view") || $user->cant("view", $record))
                 ->url(fn($record): string => $this->resource->getRoute('show', $record))
                 ->icon($showIcons ? 'heroicon-o-eye' : ''),
             $this->getTableActionItem("edit")
