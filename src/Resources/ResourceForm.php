@@ -6,6 +6,7 @@ use App\Models\User;
 use Filament\Forms;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\Response;
 use WireUi\Traits\Actions;
@@ -101,14 +102,20 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
         $relations = [];
 
         $this->form->getComponent(function($comp) use (&$data, &$relations) {
-            if($comp instanceof \WebCaravel\Admin\Forms\Components\HasOneField) {
-                $name = $comp->getName();
-                $relations[$name] = $data[$name];
-                unset($data[$name]);
-            }
+            $this->splitDataAndRelations($comp, $data, $relations);
         });
 
         return [$data, $relations];
+    }
+
+
+    protected function splitDataAndRelations(\Filament\Forms\Components\Component $component, array &$data, array &$relations): void
+    {
+        if($component instanceof \WebCaravel\Admin\Forms\Components\HasOneField) {
+            $name = $component->getName();
+            $relations[$name] = $data[$name];
+            unset($data[$name]);
+        }
     }
 
 
@@ -118,11 +125,22 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
             // Relatio
             $rel = $this->model->$key();
 
-            // Remove created/updated
-            unset($data["created_at"], $data["updated_at"]);
+            if($rel instanceof HasMany) {
+                $instances = [];
 
-            // Update or create
-            isset($data["id"]) ? $rel->update($data) : $rel->create($data);
+                foreach($data AS $row) {
+                    $instances[] = $rel->newModelInstance($row);
+                }
+
+                $rel->saveMany($instances);
+            }
+            else {
+                // Remove created/updated
+                unset($data["created_at"], $data["updated_at"]);
+
+                // Update or create
+                isset($data["id"]) ? $rel->update($data) : $rel->create($data);
+            }
         }
     }
 
