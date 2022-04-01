@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-wrap justify-end gap-4 mb-4">
+    <div class="flex flex-wrap justify-end gap-4 mb-6">
         @foreach($actionButtons AS $btn)
             {{ $btn->render() }}
         @endforeach
