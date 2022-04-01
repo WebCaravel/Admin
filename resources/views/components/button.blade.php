@@ -25,7 +25,7 @@
         case 'xl': $sizeClass = 'text-xl'; break;
     }
     $att = $attributes->merge([
-        'class' => 'px-4 py-2 border rounded-md tracking-widest focus:ring focus:ring-gray-300 disabled:opacity-25 transition focus:border-gray-900 focus:outline-none ' .
+        'class' => 'px-4 py-2 border rounded-md tracking-widest focus:ring focus:ring-gray-300 disabled:opacity-25 transition focus:border-gray-900 focus:outline-none cursor-pointer ' .
            trim($sizeClass . ' ' . $colorClasses),
         'type'  => $type,
         "x-on:click" => $attributes->get("onclick")

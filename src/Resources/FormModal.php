@@ -16,6 +16,8 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
     public Model $parentRecord;
     public string $modalId;
     public array $data = [];
+    public string|null $textBefore = null;
+    public string|null $textAfter = null;
 
 
     abstract protected function getFormSchema(): array;
@@ -41,5 +43,17 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
         $this->dispatchBrowserEvent('close-modal', [
             'id' => $this->modalId,
         ]);
+    }
+
+
+    public function getTextBefore(): ?string
+    {
+        return $this->textBefore;
+    }
+
+
+    public function getTextAfter(): ?string
+    {
+        return $this->textAfter;
     }
 }

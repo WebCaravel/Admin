@@ -2,9 +2,8 @@
 
 namespace WebCaravel\Admin\Forms\Components;
 
-use Filament\Forms\Components\Placeholder;
 
-class ModalButtonField extends Placeholder
+class ModalButtonField extends ButtonField
 {
     protected string $view = 'caravel-admin::forms.components.modal-button-field';
     public string $title = "";
@@ -45,5 +44,11 @@ class ModalButtonField extends Placeholder
     public function getModalId(): string
     {
         return "modal-" . \Str::slug($this->getName());
+    }
+
+
+    public function getXOn(): ?string
+    {
+        return "open = true;" . parent::getXOn();
     }
 }

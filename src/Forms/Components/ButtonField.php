@@ -8,8 +8,10 @@ class ButtonField extends Placeholder
 {
     protected string $view = 'caravel-admin::forms.components.button-field';
     protected string $size = "xs";
+    protected ?string $color = null;
+    protected string|null $xOn = null;
     protected bool $targetBlank = false;
-    protected string|\Closure $href;
+    protected string|\Closure|null $href = null;
 
 
     /**
@@ -58,6 +60,34 @@ class ButtonField extends Placeholder
     public function size(string $size): static
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+
+    public function getXOn(): ?string
+    {
+        return $this->xOn;
+    }
+
+
+    public function xOn(?string $xOn): static
+    {
+        $this->xOn = $xOn;
+
+        return $this;
+    }
+
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+
+    public function color(?string $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }
