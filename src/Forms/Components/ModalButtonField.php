@@ -2,9 +2,9 @@
 
 namespace WebCaravel\Admin\Forms\Components;
 
-use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Placeholder;
 
-class ModalButtonField extends Field
+class ModalButtonField extends Placeholder
 {
     protected string $view = 'caravel-admin::forms.components.modal-button-field';
     public string $title = "";
