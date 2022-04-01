@@ -16,8 +16,10 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
     public Model $parentRecord;
     public string $modalId;
     public array $data = [];
-    public string|null $textBefore = null;
-    public string|null $textAfter = null;
+    protected string|null $textBefore = null;
+    protected string|null $textAfter = null;
+    protected string $okLabel;
+    protected string $okColor;
 
 
     abstract protected function getFormSchema(): array;
@@ -55,5 +57,33 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
     public function getTextAfter(): ?string
     {
         return $this->textAfter;
+    }
+
+
+    public function getOkLabel(): string
+    {
+        return $this->okLabel ?? __("Ok");
+    }
+
+
+    public function okLabel(string $okLabel): static
+    {
+        $this->okLabel = $okLabel;
+
+        return $this;
+    }
+
+
+    public function getOkColor(): string
+    {
+        return $this->okColor ?? "primary";
+    }
+
+
+    public function okColor(string $okColor): static
+    {
+        $this->okColor = $okColor;
+
+        return $this;
     }
 }
