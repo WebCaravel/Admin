@@ -8,15 +8,14 @@
     :state-path="$getStatePath()"
 >
     <div {{ $attributes->merge($getExtraAttributes())->class('filament-forms-placeholder-component') }}>
-{{--        x-on:click="open = true"--}}
         <x-caravel-admin::button
-            x-on:click="{{ $getXOn() }}"
+            x-on:click="{{ $getOnClickJs() }}"
             tag="a"
             :size="$getSize()"
             :href="$getHref()"
             :color="$getColor()"
             :target="$isTargetBlank() ? '_blank': ''">
-            {{ $getContent() }}
+            {{ $getButtonLabel() }}
         </x-caravel-admin::button>
     </div>
 </x-forms::field-wrapper>

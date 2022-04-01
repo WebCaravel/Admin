@@ -2,16 +2,21 @@
 
 namespace WebCaravel\Admin\Forms\Components;
 
+use App\CaravelAdmin\Resources\Customer\CustomerForm;
+use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Contracts\HasForms;
+use WebCaravel\Admin\Resources\ResourceForm;
 
 class ButtonField extends Placeholder
 {
     protected string $view = 'caravel-admin::forms.components.button-field';
     protected string $size = "xs";
     protected ?string $color = null;
-    protected string|null $xOn = null;
+    protected string|null $onClickJs = null;
     protected bool $targetBlank = false;
     protected string|\Closure|null $href = null;
+    protected ?string $buttonLabel;
 
 
     /**
@@ -20,12 +25,6 @@ class ButtonField extends Placeholder
     public function getHref(): ?string
     {
         return $this->evaluate($this->href);
-    }
-
-
-    public function getContent(): ?string
-    {
-        return isset($this->content) ? $this->evaluate($this->content) : $this->getLabel();
     }
 
 
@@ -65,15 +64,15 @@ class ButtonField extends Placeholder
     }
 
 
-    public function getXOn(): ?string
+    public function getOnClickJs(): ?string
     {
-        return $this->xOn;
+        return $this->onClickJs;
     }
 
 
-    public function xOn(?string $xOn): static
+    public function onClickJs(?string $onClickJs): static
     {
-        $this->xOn = $xOn;
+        $this->onClickJs = $onClickJs;
 
         return $this;
     }
@@ -88,6 +87,20 @@ class ButtonField extends Placeholder
     public function color(?string $color): static
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+
+    public function getButtonLabel(): ?string
+    {
+        return $this->buttonLabel ?? $this->getLabel();
+    }
+
+
+    public function buttonLabel(?string $buttonLabel): static
+    {
+        $this->buttonLabel = $buttonLabel;
 
         return $this;
     }

@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\Response;
-use WebCaravel\Admin\View\Components\FormActionButton;
-use WebCaravel\Admin\View\Components\Button;
+use WebCaravel\Admin\Forms\Components\ButtonConfirmModalField;
+use WebCaravel\Admin\Forms\Components\ButtonField;
 use WireUi\Traits\Actions;
 
 abstract class ResourceForm extends Component implements Forms\Contracts\HasForms
@@ -185,15 +185,19 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
         $array = [];
 
         if($this->recordExists() && $this->user->can("delete", $this->model)) {
-            $array["delete"]= FormActionButton::make("caravel-admin::delete-button")
-                ->setAction('$wire.delete()');
+            $array["delete"]= ButtonConfirmModalField::make("delete")
+                ->color("danger")
+                ->okColor("danger")
+                ->onClickJs('$wire.delete()')
+                ->title(__("Delete"))
+                ->body(__('Are you sure, that you want to delete this item?'))
+                ->buttonLabel(__("Delete"));
         }
+
         if($this->recordExists() && !$this->isEditable() && $this->user->can("update", $this->model)) {
-            $array["edit"]= FormActionButton::make("caravel-admin::button")
-                ->setTag('a')
-                ->setColor('primary')
-                ->setHref($this->resource->getRoute('edit', $this->model))
-                ->setLabel(__("Edit"));
+            $array["edit"]= ButtonField::make("edit")
+                ->href($this->resource->getRoute('edit', $this->model))
+                ->buttonLabel(__("Edit"));
         }
 
         return $array;
@@ -213,9 +217,18 @@ abstract class ResourceForm extends Component implements Forms\Contracts\HasForm
             }
         }
 
+        // Action buttons
+        $actionButtons = $this->getActionButtons();
+        foreach($actionButtons AS $key => $button) {
+            $actionButtons[$key]
+                ->label("")
+                ->size("md")
+                ->container($this->form);
+        }
+
         return view('caravel-admin::resources.form', [
             "resource" => $this->resource,
-            "actionButtons" => $this->getActionButtons(),
+            "actionButtons" => $actionButtons,
             "showSaveButton" => $showSaveButton
         ]);
     }
