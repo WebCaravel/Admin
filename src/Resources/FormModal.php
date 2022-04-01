@@ -45,6 +45,7 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
         $this->dispatchBrowserEvent('close-modal', [
             'id' => $this->modalId,
         ]);
+        $this->data = [];
     }
 
 
