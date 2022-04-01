@@ -17,7 +17,7 @@
         <x-slot name="title">{{ $getTitle() }}</x-slot>
 
         <x-slot name="body">
-            @livewire(config("caravel-admin.resources.prefix") . "customer.modals.add-credit-modal", [
+            @livewire($getLivewireName(), [
                 "parentRecord" => $getRecord(),
                 "modalId" => $getModalId()
             ])

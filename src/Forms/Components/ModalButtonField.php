@@ -11,13 +11,16 @@ class ModalButtonField extends Field
     public string $modalFormClass;
 
 
-    public function getModalFormClass(): string
+    public function getLivewireName(): string
     {
-        return $this->modalFormClass;
+        $ns = config("caravel-admin.resources.namespace");
+        $class = substr($this->modalFormClass, strlen($ns));
+
+        return config("caravel-admin.resources.prefix") . str_replace("\-", ".", \Str::kebab(substr($class, 1)));
     }
 
 
-    public function modal(string $modalFormClass): static
+    public function modalFormClass(string $modalFormClass): static
     {
         $this->modalFormClass = $modalFormClass;
 

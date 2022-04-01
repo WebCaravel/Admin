@@ -2,93 +2,62 @@
 
 namespace WebCaravel\Admin\Forms\Components;
 
-use Filament\Forms\Components\Field;
-use Filament\Tables\Actions\Concerns\CanRequireConfirmation;
-use Filament\Tables\Actions\Concerns\HasColor;
+use Filament\Forms\Components\Placeholder;
 
-class ButtonField extends Field
+class ButtonField extends Placeholder
 {
-    use HasColor, CanRequireConfirmation;
-
     protected string $view = 'caravel-admin::forms.components.button-field';
-    protected ?string $buttonLabel = null;
-    protected ?string $action = null;
-    protected ?string $heading = null;
-    protected ?string $subHeading = null;
-
-
-    public function action(string $action): self
-    {
-        $this->action = $action;
-
-        return $this;
-    }
-
-
-    public function getAction(): string
-    {
-        return $this->action ?: $this->getName();
-    }
+    protected string $size = "xs";
+    protected bool $targetBlank = false;
+    protected string|\Closure $href;
 
 
     /**
      * @return string|null
      */
-    public function getHeading(): ?string
+    public function getHref(): ?string
     {
-        return $this->heading;
+        return $this->evaluate($this->href);
     }
 
 
-    /**
-     * @param string|null $heading
-     * @return self
-     */
-    public function heading(?string $heading): self
+    public function getContent(): ?string
     {
-        $this->heading = $heading;
+        return isset($this->content) ? $this->evaluate($this->content) : $this->getLabel();
+    }
+
+
+    public function targetBlank(bool $val = true): self
+    {
+        $this->targetBlank = $val;
 
         return $this;
     }
 
 
-    /**
-     * @return string|null
-     */
-    public function getSubHeading(): ?string
+    public function href(string|\Closure $val): self
     {
-        return $this->subHeading;
-    }
-
-
-    /**
-     * @param string|null $subheading
-     * @return self
-     */
-    public function subHeading(?string $subHeading): self
-    {
-        $this->subHeading = $subHeading;
+        $this->href = $val;
 
         return $this;
     }
 
 
-    /**
-     * @return string|null
-     */
-    public function getButtonLabel(): ?string
+    public function isTargetBlank(): bool
     {
-        return $this->buttonLabel ?: $this->getLabel();
+        return $this->targetBlank;
     }
 
 
-    /**
-     * @param string|null $buttonLabel
-     * @return self
-     */
-    public function buttonLabel(?string $buttonLabel): self
+    public function getSize(): string
     {
-        $this->buttonLabel = $buttonLabel;
+        return $this->size;
+    }
+
+
+    public function size(string $size): static
+    {
+        $this->size = $size;
 
         return $this;
     }
