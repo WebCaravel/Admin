@@ -25,7 +25,7 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
     abstract protected function getFormSchema(): array;
 
 
-    abstract public function submit(): void;
+    abstract public function submit();
 
 
     protected function getFormStatePath(): string
@@ -46,6 +46,12 @@ abstract class FormModal extends Component implements Forms\Contracts\HasForms
             'id' => $this->modalId,
         ]);
         $this->data = [];
+    }
+
+
+    public function reloadPage()
+    {
+        return redirect(request()->header('Referer'));
     }
 
 
