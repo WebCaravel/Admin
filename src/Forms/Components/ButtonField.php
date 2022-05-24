@@ -96,6 +96,12 @@ class ButtonField extends Placeholder
     {
         return $this->buttonLabel ?? $this->getLabel();
     }
+    
+    
+    public function action(string $livewireMethodName, string $arguments = ''): static
+    {
+        return $this->onClickJs('$wire.'.$livewireMethodName.'('.$arguments.')');
+    }
 
 
     public function buttonLabel(?string $buttonLabel): static
