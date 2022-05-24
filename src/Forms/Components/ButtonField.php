@@ -6,7 +6,9 @@ use App\CaravelAdmin\Resources\Customer\CustomerForm;
 use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Contracts\HasForms;
+use Illuminate\Contracts\Support\Htmlable;
 use WebCaravel\Admin\Resources\ResourceForm;
+use Closure;
 
 class ButtonField extends Placeholder
 {
@@ -15,8 +17,8 @@ class ButtonField extends Placeholder
     protected ?string $color = null;
     protected string|null $onClickJs = null;
     protected bool $targetBlank = false;
-    protected string|\Closure|null $href = null;
-    protected ?string $buttonLabel;
+    protected string|Closure|null $href = null;
+    protected string | Htmlable | Closure $buttonLabel;
 
 
     /**
@@ -92,22 +94,22 @@ class ButtonField extends Placeholder
     }
 
 
-    public function getButtonLabel(): ?string
-    {
-        return $this->buttonLabel ?? $this->getLabel();
-    }
-    
-    
     public function action(string $livewireMethodName, string $arguments = ''): static
     {
         return $this->onClickJs('$wire.'.$livewireMethodName.'('.$arguments.')');
     }
 
 
-    public function buttonLabel(?string $buttonLabel): static
+    public function buttonLabel(string | Htmlable | Closure | null $buttonLabel): static
     {
         $this->buttonLabel = $buttonLabel;
 
         return $this;
+    }
+
+
+    public function getButtonLabel(): ?string
+    {
+        return $this->buttonLabel ? $this->evaluate($this->buttonLabel) : $this->getLabel();
     }
 }
